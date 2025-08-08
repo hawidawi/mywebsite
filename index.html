@@ -1,27 +1,30 @@
 
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>موقعي الجديد</title>
+    <title>موقعي الشخصي</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f4f4f4;
-            color: #333;
             margin: 0;
-            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
         }
         header {
-            background: #0078D7;
+            background-color: #0078D7;
             color: white;
             padding: 20px;
             font-size: 24px;
         }
         main {
-            padding: 20px;
+            margin: 50px auto;
+            max-width: 600px;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
         }
         footer {
             background: #222;
@@ -31,15 +34,34 @@
             bottom: 0;
             width: 100%;
         }
+        a.button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            background-color: #0078D7;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        a.button:hover {
+            background-color: #005A9E;
+        }
     </style>
 </head>
 <body>
-    <header>أهلاً بك في موقعي</header>
+
+    <header>مرحباً بك في موقعي</header>
+
     <main>
-        <h1>مرحبا بالعالم!</h1>
-        <p>هذا هو موقعي الجديد على GitHub Pages 🚀</p>
+        <h1>🚀 أهلاً بالعالم!</h1>
+        <p>هذا هو موقعي الجديد على GitHub Pages.</p>
+        <a class="button" href="https://www.youtube.com" target="_blank">زور قناتي على اليوتيوب</a>
     </main>
-    <footer>جميع الحقوق محفوظة &copy; 2025</footer>
+
+    <footer>
+        جميع الحقوق محفوظة © 2025
+    </footer>
+
 </body>
 </html>
 

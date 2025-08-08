@@ -2,64 +2,219 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>موقعي الشخصي</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #333;
-            color: white;
-            padding: 15px;
-            font-size: 24px;
-        }
-        .container {
-            margin-top: 30px;
-        }
-        button {
-            background-color: #008cba;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            margin: 10px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        button:hover {
-            background-color: #005f73;
-        }
-        audio {
-            margin-top: 15px;
-        }
-    </style>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>اتحاد الزوط العالمي</title>
+<style>
+  :root{
+    --brand:#0078D7; --bg:#f6f7fb; --text:#222; --card:#fff; --muted:#6b7280; --ok:#0ea5e9;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Tahoma,sans-serif;background:var(--bg);color:var(--text)}
+  header{display:flex;align-items:center;gap:12px;padding:14px 18px;background:var(--brand);color:#fff;position:sticky;top:0;z-index:9}
+  header .title{font-weight:700}
+  header nav{margin-inline-start:auto;display:flex;gap:8px;flex-wrap:wrap}
+  header a{color:#fff;text-decoration:none;background:#ffffff22;padding:6px 10px;border-radius:10px}
+  .container{max-width:980px;margin:24px auto;padding:0 16px}
+  .grid{display:grid;gap:16px}
+  .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  @media(max-width:840px){.grid-2{grid-template-columns:1fr}}
+  .card{background:var(--card);border-radius:14px;box-shadow:0 6px 24px #0001;padding:18px}
+  .center{text-align:center}
+  .btn{background:var(--brand);color:#fff;border:none;padding:12px 18px;border-radius:12px;font-weight:700;cursor:pointer}
+  .btn:active{transform:translateY(1px)}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:center}
+  .small{color:var(--muted);font-size:13px}
+  footer{padding:20px;text-align:center;color:#fff;background:#111;margin-top:40px}
+  .tag{background:#e2e8f0;color:#111;padding:2px 8px;border-radius:999px;font-weight:700}
+  kbd{background:#eee;border-radius:6px;padding:2px 6px;border:1px solid #ddd}
+
+  /* دردشة */
+  #chatCard{display:none}
+  #chatList{list-style:none;margin:0;padding:0;max-height:320px;overflow:auto;border:1px solid #e5e7eb;border-radius:10px}
+  #chatList li{padding:8px 10px;border-bottom:1px dashed #eee}
+  #chatList li b{color:#2563eb}
+  #chatForm{display:flex;gap:8px;margin-top:10px}
+  #chatForm input, #chatForm button{padding:10px;border-radius:10px;border:1px solid #ddd}
+  #chatForm input{flex:1}
+  .note{background:#fff6;border:1px dashed #ddd;padding:10px;border-radius:10px}
+
+  /* كنفِتّي بسيط */
+  canvas#boom{position:fixed;inset:0;pointer-events:none}
+</style>
 </head>
 <body>
+<header>
+  <div class="title">اتحاد الزوط العالمي</div>
+  <nav>
+    <a href="#home">الرئيسية</a>
+    <a href="#chat">الدردشة</a>
+  </nav>
+</header>
 
-    <header>
-        أهلاً بك في موقعي 🎉
-    </header>
+<canvas id="boom"></canvas>
 
-    <div class="container">
-        <h2>اختر ما تريد:</h2>
-        <button onclick="alert('تم الضغط على الزر الأول!')">زر 1</button>
-        <button onclick="alert('تم الضغط على الزر الثاني!')">زر 2</button>
+<main class="container" id="home">
+  <div class="card center">
+    <h1>زر الزوط الفوري</h1>
+    <p class="small">ارفع ملفي الصوت بـالأسماء: <code>assets/sounds/zoot1.mp3</code> و <code>assets/sounds/zoot2.mp3</code>.</p>
+    <div class="row" style="margin:14px 0">
+      <button class="btn" id="btn1">زر 1</button>
+      <button class="btn" id="btn2">زر 2</button>
+    </div>
+    <p class="small">اختصارات: <kbd>1</kbd> يشغل زر 1 — <kbd>2</kbd> يشغل زر 2</p>
+  </div>
 
-        <h3>تشغيل صوت:</h3>
-        <audio controls>
-            <source src="audio.mp3" type="audio/mpeg">
-            المتصفح الخاص بك لا يدعم تشغيل الصوت.
-        </audio>
+  <div class="grid grid-2">
+    <div class="card">
+      <h2>وش يعني زوط؟</h2>
+      <p>فن الردود الفورية على الكلمات الغريبة. القاعدة الذهبية:
+        <span class="tag">ها؟</span> ثم <span class="tag">زوط</span>… والباقي ضحك 😂</p>
     </div>
 
+    <!-- بطاقة الدردشة -->
+    <div class="card" id="chatCard">
+      <h2 id="chat">غرفة الدردشة الزوطية</h2>
+      <div class="small" id="chatHint">أدخل لقبك وبادر بالزوط!</div>
+      <ul id="chatList"></ul>
+      <form id="chatForm" onsubmit="return false;">
+        <input id="nick" placeholder="اللقب (مرّة واحدة)"/>
+        <input id="msg" placeholder="اكتب رسالة…"/>
+        <button class="btn" id="send">إرسال</button>
+      </form>
+    </div>
+
+    <!-- تظهر بدل الدردشة إذا ما تم ضبط Firebase -->
+    <div class="card note" id="chatOff" style="display:none">
+      <b>الدردشة متوقفة مؤقتًا.</b>
+      <div class="small">
+        لفعلها: أنشئ مشروع Firebase → فعّل Realtime Database → انسخ الإعدادات (config) وضعها في الكود تحت
+        <code>// إعدادات Firebase</code> ثم احفظ. بعد دقيقة حدّث الصفحة <kbd>Ctrl</kbd>+<kbd>F5</kbd>.
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>UZW © 2025 — صنع بحب وسعادة زوطية</footer>
+
+<script>
+/* ========= الأصوات ========= */
+const s1 = new Audio('assets/sounds/zoot1.mp3');
+const s2 = new Audio('assets/sounds/zoot2.mp3');
+s1.preload = 'auto'; s2.preload = 'auto';
+
+function playZoot(which=1){
+  try{
+    (which===1? s1: s2).currentTime = 0;
+    (which===1? s1: s2).play().catch(()=>{});
+  }catch(e){}
+  confettiBurst(innerWidth*0.5, innerHeight*0.4);
+}
+
+document.getElementById('btn1').onclick = ()=> playZoot(1);
+document.getElementById('btn2').onclick = ()=> playZoot(2);
+window.addEventListener('keydown', (e)=>{
+  if(e.key==='1'){ playZoot(1); }
+  if(e.key==='2'){ playZoot(2); }
+});
+
+/* ========= كنفِتّي بسيط ========= */
+const boom = document.getElementById('boom');
+const ctx = boom.getContext('2d');
+function resize(){ boom.width = innerWidth; boom.height = innerHeight; }
+addEventListener('resize', resize); resize();
+let parts = [];
+function confettiBurst(x,y){
+  for(let i=0;i<120;i++){
+    parts.push({
+      x, y, r: 3+Math.random()*3,
+      vx:(Math.random()-0.5)*6, vy:(Math.random()-1.2)*7,
+      a:1, c:`hsl(${Math.random()*360},90%,60%)`
+    });
+  }
+}
+function tick(){
+  ctx.clearRect(0,0,boom.width,boom.height);
+  parts.forEach(p=>{
+    p.vy += 0.12; p.x += p.vx; p.y += p.vy; p.a -= 0.012;
+    ctx.globalAlpha = Math.max(p.a,0);
+    ctx.beginPath(); ctx.fillStyle = p.c; ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
+  });
+  parts = parts.filter(p=>p.a>0 && p.y<boom.height+50);
+  requestAnimationFrame(tick);
+}
+tick();
+
+/* ========= الدردشة (Firebase) ========= */
+/* ضع إعدادات Firebase هنا (استبدل القيم أدناه بقيم مشروعك) */
+const FIREBASE_CONFIG = {
+  apiKey: "",               // ← اكتب قيمتك
+  authDomain: "",           // ← اكتب قيمتك
+  databaseURL: "",          // ← مهم لدردشة Realtime
+  projectId: "",            // ← اكتب قيمتك
+  storageBucket: "",        // اختياري
+  messagingSenderId: "",    // اختياري
+  appId: ""                 // ← اكتب قيمتك
+};
+
+/* إن ما في إعدادات، نخفي الدردشة ونظهر ملاحظة */
+const chatCard = document.getElementById('chatCard');
+const chatOff  = document.getElementById('chatOff');
+
+function hasFirebaseConfig(cfg){
+  return cfg && cfg.apiKey && cfg.databaseURL && cfg.projectId && cfg.appId;
+}
+
+if(!hasFirebaseConfig(FIREBASE_CONFIG)){
+  chatOff.style.display='block';
+} else {
+  // نحمل SDKs من CDN (نسخ خفيفة مناسبة لصفحة ثابتة)
+  const s = document.createElement('script');
+  s.type = 'module';
+  s.textContent = `
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getDatabase, ref, push, onChildAdded, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+    const app = initializeApp(${JSON.stringify(FIREBASE_CONFIG)});
+    const db  = getDatabase(app);
+
+    const list  = document.getElementById('chatList');
+    const nickI = document.getElementById('nick');
+    const msgI  = document.getElementById('msg');
+    const sendB = document.getElementById('send');
+
+    // حفظ اللقب محليًا
+    nickI.value = localStorage.getItem('uzw_nick') || "";
+
+    function addMsg(el){
+      const li = document.createElement('li');
+      li.innerHTML = "<b>"+ (el.nick||"مجهول") +"</b>: "+ (el.text||"");
+      list.appendChild(li);
+      list.scrollTop = list.scrollHeight;
+    }
+
+    // الاستماع للرسائل الجديدة
+    const roomRef = ref(db, "rooms/default");
+    onChildAdded(roomRef, snap => {
+      const v = snap.val(); addMsg(v||{});
+    });
+
+    sendB.onclick = ()=>{
+      const nick = (nickI.value||"").trim() || "مجهول";
+      const text = (msgI.value||"").trim();
+      if(!text) return;
+      localStorage.setItem('uzw_nick', nick);
+      push(roomRef, {nick, text, ts: serverTimestamp()});
+      msgI.value=""; msgI.focus();
+      // طنّة صغيرة
+      try { new Audio('assets/sounds/zoot1.mp3').play().catch(()=>{}); }catch(e){}
+    };
+
+    document.getElementById('chatCard').style.display='block';
+    document.getElementById('chatOff').style.display='none';
+  `;
+  document.body.appendChild(s);
+}
+</script>
 </body>
 </html>
-
-
-

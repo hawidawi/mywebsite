@@ -8,60 +8,58 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            background-color: #f4f4f4;
             text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
         }
         header {
-            background-color: #0078D7;
+            background-color: #333;
             color: white;
-            padding: 20px;
+            padding: 15px;
             font-size: 24px;
         }
-        main {
-            margin: 50px auto;
-            max-width: 600px;
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        .container {
+            margin-top: 30px;
         }
-        footer {
-            background: #222;
+        button {
+            background-color: #008cba;
             color: white;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-        a.button {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 12px 25px;
-            background-color: #0078D7;
-            color: white;
-            text-decoration: none;
+            border: none;
+            padding: 12px 20px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
             border-radius: 5px;
         }
-        a.button:hover {
-            background-color: #005A9E;
+        button:hover {
+            background-color: #005f73;
+        }
+        audio {
+            margin-top: 15px;
         }
     </style>
 </head>
 <body>
 
-    <header>مرحباً بك في موقعي</header>
+    <header>
+        أهلاً بك في موقعي 🎉
+    </header>
 
-    <main>
-        <h1>🚀 أهلاً بالعالم!</h1>
-        <p>هذا هو موقعي الجديد على GitHub Pages.</p>
-        <a class="button" href="https://www.youtube.com" target="_blank">زور قناتي على اليوتيوب</a>
-    </main>
+    <div class="container">
+        <h2>اختر ما تريد:</h2>
+        <button onclick="alert('تم الضغط على الزر الأول!')">زر 1</button>
+        <button onclick="alert('تم الضغط على الزر الثاني!')">زر 2</button>
 
-    <footer>
-        جميع الحقوق محفوظة © 2025
-    </footer>
+        <h3>تشغيل صوت:</h3>
+        <audio controls>
+            <source src="audio.mp3" type="audio/mpeg">
+            المتصفح الخاص بك لا يدعم تشغيل الصوت.
+        </audio>
+    </div>
 
 </body>
 </html>
+
+
 
